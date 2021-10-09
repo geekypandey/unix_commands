@@ -91,6 +91,8 @@ class TestLsCommand(unittest.TestCase):
         files = self.create_temp_files(dirname=NEW_HOME, count=3)
         expected = self.get_base_names(files)
         os.environ["HOME"] = NEW_HOME
+        output = ls.ls("~")
+
         os.environ["HOME"] = OLD_HOME
         pass
 
