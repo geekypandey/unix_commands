@@ -86,6 +86,8 @@ class TestLsCommand(unittest.TestCase):
         self.assertIn(folder, output)
 
     def test_ls_command_with_change_home_directory_tilde(self) -> None:
+        HOME = os.path.expanduser("~")
+        folder = self.create_temp_folders(dirname=HOME)[0]
         pass
 
     def tearDown(self) -> None:
