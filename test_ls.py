@@ -9,8 +9,8 @@ import ls
 
 class TestLsCommand(unittest.TestCase):
     def setUp(self) -> None:
-        self.dirname = mkdtemp()
-        self.to_clean = [self.dirname]
+        self.to_clean = []
+        self.dirname = self.create_temp_folders()[0]
         os.chdir(self.dirname)
 
     def create_temp_files(
@@ -22,8 +22,8 @@ class TestLsCommand(unittest.TestCase):
         self.to_clean.extend(files)
         return files
 
-    def create_temp_folders(self, dirname=None, count: int = 1) -> list:
-        folders = [mkdtemp(dir=dirname) for _ in range(count)]
+    def create_temp_folders(self, dirname=None, prefix=None, count: int = 1) -> list:
+        folders = [mkdtemp(dir=dirname, prefix=None) for _ in range(count)]
         self.to_clean.extend(folders)
         return folders
 
@@ -77,6 +77,23 @@ class TestLsCommand(unittest.TestCase):
         output = ls.ls(reverse=True)
         expected = sorted(self.get_base_names(files), reverse=True)
         self.assertEqual(output, expected)
+
+    def test_ls_command_with_home_directory_as_tilde(self) -> None:
+        HOME = os.path.expanduser("~")
+        folder = self.create_temp_folders(dirname=HOME)[0]
+        folder = os.path.basename(folder)
+        output = ls.ls("~")
+        self.assertIn(folder, output)
+
+    def test_ls_command_with_change_home_directory_tilde(self) -> None:
+        OLD_HOME = os.path.expanduser("~")
+        NEW_HOME = self.create_temp_folders(dirname=OLD_HOME)[0]
+        files = self.create_temp_files(dirname=NEW_HOME, count=3)
+        expected = sorted(self.get_base_names(files))
+        os.environ["HOME"] = NEW_HOME
+        output = ls.ls("~")
+        self.assertEqual(output, expected)
+        os.environ["HOME"] = OLD_HOME
 
     def tearDown(self) -> None:
         for c in self.to_clean:
