@@ -22,7 +22,7 @@ class TestLsCommand(unittest.TestCase):
         self.to_clean.extend(files)
         return files
 
-    def create_temp_folders(self, dirname=None, count: int = 1) -> list:
+    def create_temp_folders(self, dirname=None, prefix=None, count: int = 1) -> list:
         folders = [mkdtemp(dir=dirname) for _ in range(count)]
         self.to_clean.extend(folders)
         return folders
