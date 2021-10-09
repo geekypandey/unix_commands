@@ -94,7 +94,6 @@ class TestLsCommand(unittest.TestCase):
         output = ls.ls("~")
         self.assertEqual(output, expected)
         os.environ["HOME"] = OLD_HOME
-        pass
 
     def tearDown(self) -> None:
         for c in self.to_clean:
