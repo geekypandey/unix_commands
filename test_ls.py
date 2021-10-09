@@ -88,16 +88,6 @@ class TestLsCommand(unittest.TestCase):
         output = ls.ls("~")
         self.assertIn(folder, output)
 
-    def test_ls_command_with_change_home_directory_tilde(self) -> None:
-        OLD_HOME = os.path.expanduser("~")
-        NEW_HOME = self.create_temp_folders(dirname=OLD_HOME)[0]
-        files = self.create_temp_files(dirname=NEW_HOME, count=3)
-        expected = sorted(self.get_base_names(files))
-        os.environ["HOME"] = NEW_HOME
-        output = ls.ls("~")
-        self.assertEqual(output, expected)
-        os.environ["HOME"] = OLD_HOME
-
     def tearDown(self) -> None:
         os.chdir(self.OLD_PWD)
         for c in self.to_clean:
