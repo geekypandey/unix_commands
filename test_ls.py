@@ -9,6 +9,7 @@ import ls
 
 class TestLsCommand(unittest.TestCase):
     def setUp(self) -> None:
+        self.OLD_PWD = os.path.dirname(__file__)
         self.to_clean = []
         self.dirname = self.create_temp_folders()[0]
         os.chdir(self.dirname)
@@ -16,9 +17,11 @@ class TestLsCommand(unittest.TestCase):
     def create_temp_files(
         self, dirname=None, count: int = 1, prefix=None, suffix=None
     ) -> list:
-        files = [
-            mkstemp(dir=dirname, prefix=prefix, suffix=suffix)[1] for _ in range(count)
-        ]
+        files = []
+        for _ in range(count):
+            fd, filename = mkstemp(dir=dirname, prefix=prefix, suffix=suffix)
+            os.close(fd)
+            files.append(filename)
         self.to_clean.extend(files)
         return files
 
@@ -96,6 +99,7 @@ class TestLsCommand(unittest.TestCase):
         os.environ["HOME"] = OLD_HOME
 
     def tearDown(self) -> None:
+        os.chdir(self.OLD_PWD)
         for c in self.to_clean:
             if not os.path.exists(c):
                 continue
