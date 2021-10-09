@@ -89,6 +89,7 @@ class TestLsCommand(unittest.TestCase):
         OLD_HOME = os.path.expanduser("~")
         NEW_HOME = self.create_temp_folders(dirname=OLD_HOME)[0]
         files = self.create_temp_files(dirname=NEW_HOME, count=3)
+        print(files)
         os.environ["HOME"] = NEW_HOME
         os.environ["HOME"] = OLD_HOME
         pass
