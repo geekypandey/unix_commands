@@ -80,9 +80,9 @@ class TestLsCommand(unittest.TestCase):
 
     def test_ls_command_with_home_directory_as_tilde(self) -> None:
         HOME = os.path.expanduser("~")
-        folder = self.create_temp_folders(dirname=HOME, prefix=".")[0]
+        folder = self.create_temp_folders(dirname=HOME)[0]
         folder = os.path.basename(folder)
-        output = ls.ls("~", show_hidden=True)
+        output = ls.ls("~")
         self.assertIn(folder, output)
 
     def tearDown(self) -> None:
