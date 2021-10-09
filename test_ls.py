@@ -79,6 +79,7 @@ class TestLsCommand(unittest.TestCase):
         self.assertEqual(output, expected)
 
     def test_ls_command_with_home_directory_as_tilde(self) -> None:
+        HOME = os.path.expanduser("~")
         pass
 
     def tearDown(self) -> None:
