@@ -84,7 +84,6 @@ class TestLsCommand(unittest.TestCase):
         folder = os.path.basename(folder)
         output = ls.ls("~", show_hidden=True)
         self.assertIn(folder, output)
-        pass
 
     def tearDown(self) -> None:
         for c in self.to_clean:
