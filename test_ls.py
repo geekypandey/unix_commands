@@ -86,11 +86,11 @@ class TestLsCommand(unittest.TestCase):
         self.assertIn(folder, output)
 
     def test_ls_command_with_change_home_directory_tilde(self) -> None:
-        HOME = os.path.expanduser("~")
-        folder = self.create_temp_folders(dirname=HOME)[0]
-        os.environ["HOME"] = folder
-        os.environ["HOME"] = HOME
-        print(folder)
+        OLD_HOME = os.path.expanduser("~")
+        NEW_HOME = self.create_temp_folders(dirname=OLD_HOME)[0]
+        files = self.create_temp_files(dirname=NEW_HOME, count=3)
+        os.environ["HOME"] = NEW_HOME
+        os.environ["HOME"] = OLD_HOME
         pass
 
     def tearDown(self) -> None:
