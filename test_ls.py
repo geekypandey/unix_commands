@@ -85,6 +85,9 @@ class TestLsCommand(unittest.TestCase):
         output = ls.ls("~")
         self.assertIn(folder, output)
 
+    def test_ls_command_with_change_home_directory_tilde(self) -> None:
+        pass
+
     def tearDown(self) -> None:
         for c in self.to_clean:
             if not os.path.exists(c):
