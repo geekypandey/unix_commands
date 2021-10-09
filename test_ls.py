@@ -9,8 +9,8 @@ import ls
 
 class TestLsCommand(unittest.TestCase):
     def setUp(self) -> None:
-        self.dirname = mkdtemp()
-        self.to_clean = [self.dirname]
+        self.to_clean = []
+        self.dirname = self.create_temp_folders()[0]
         os.chdir(self.dirname)
 
     def create_temp_files(
